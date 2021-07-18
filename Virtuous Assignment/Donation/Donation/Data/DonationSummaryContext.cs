@@ -9,6 +9,10 @@ namespace Donation.Data
 {
     public class DonationSummaryContext : DbContext
     {
+        public DonationSummaryContext()
+        {
+        }
+
         public DonationSummaryContext(DbContextOptions<DonationSummaryContext> options) : base(options)
         {
         }

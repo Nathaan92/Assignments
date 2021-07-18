@@ -171,3 +171,4 @@ C:\Users\natha\Documents\GitHub\Assignments\Virtuous Assignment\Donation\Donatio
 C:\Users\natha\Documents\GitHub\Assignments\Virtuous Assignment\Donation\Donation\obj\Debug\net5.0\Razor\Views\DonationSummaries\Details.cshtml.g.cs
 C:\Users\natha\Documents\GitHub\Assignments\Virtuous Assignment\Donation\Donation\obj\Debug\net5.0\Razor\Views\DonationSummaries\Edit.cshtml.g.cs
 C:\Users\natha\Documents\GitHub\Assignments\Virtuous Assignment\Donation\Donation\obj\Debug\net5.0\Razor\Views\DonationSummaries\Index.cshtml.g.cs
+C:\Users\natha\Documents\GitHub\Assignments\Virtuous Assignment\Donation\Donation\obj\Debug\net5.0\Razor\Views\DonationSummaries\DonationMetrics.cshtml.g.cs

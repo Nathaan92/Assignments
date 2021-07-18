@@ -149,5 +149,42 @@ namespace Donation.Controllers
         {
             return _context.DonationSummaries.Any(e => e.ID == id);
         }
+        public IActionResult DonationMetrics()
+        {
+            //Query cash donations for count for views piechart
+            var cashPieChart = _context.DonationSummaries.Where(a => a.DonationType == "Cash").Count();
+            ViewBag.cashPieChart = cashPieChart;
+
+            //Query time donations for count for views piechart
+            var timePieChart = _context.DonationSummaries.Where(a => a.DonationType == "Time").Count();
+            ViewBag.timePieChart = timePieChart;
+
+            //Query item donations for count for views piechart
+            var itemPieChart = _context.DonationSummaries.Where(a => a.DonationType == "Item").Count();
+            ViewBag.itemPieChart = itemPieChart;
+
+            //Query group by month, add total of donationcash value, to list. Year was included to add yearly charts.
+            var monthlyDonations = _context.DonationSummaries.Select(d => new { d.DonationDate.Year, d.DonationDate.Month, d.DonationCashValue }).GroupBy(x => new { x.Year, x.Month }, (key, group) => new { donationtotal = group.Sum(dt => dt.DonationCashValue) }).ToList();
+
+            //List to recieve decimal values from foreach loop
+            List<Decimal> donationSummaryList = new List<Decimal>();
+            //Foreach loop to convert from anonymous type list to decimal type values
+            foreach (var monthlyDonation in monthlyDonations)
+            {
+                donationSummaryList.Add(monthlyDonation.donationtotal);
+            }
+            //Serialization of decimal list to send to views script chart
+            ViewBag.donationSummaryList = Newtonsoft.Json.JsonConvert.SerializeObject(donationSummaryList);
+
+            //Query sum of donationcashvalue to date
+            var totalDonationsToDate = _context.DonationSummaries.Sum(a => a.DonationCashValue);
+            ViewBag.totalDonationsToDate = totalDonationsToDate;
+
+            //Query max of donationcashvalue to date
+            var largestDonationToDate = _context.DonationSummaries.Max(a => a.DonationCashValue);
+            ViewBag.largestDonationToDate = largestDonationToDate;
+
+            return View();
+        }
     }
 }

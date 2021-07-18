@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - Donation</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <!--Allow for view specific script source-->
+    @RenderSection("Scripts", false)
 </head>
 <body>
     <header>
@@ -21,8 +23,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <!--Navigation to DonationSummary Model View-->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DonationSummaries" asp-action="Index">Donation Log</a>
+                        </li>
+                        <!--Navigation to DonationMetrics View-->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="DonationSummaries" asp-action="DonationMetrics">Donation Metrics</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -33,7 +40,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" align="center">
             @RenderBody()
         </main>
     </div>
@@ -46,6 +53,5 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

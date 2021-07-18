@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "DonationMetrics";
+}
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+}
+
+<h1>Donation Metrics</h1>
+<!--Parent Div. Sets style for child divs in site.css-->
+<div id="metrics" class="container childspacing">
+    <!--First bootstrap row with gutter spacing specified-->
+    <div id="leaderltats" class="row gy-5 ">
+        <!--First column containing totalDonationsToDate-->
+        <div id="leaderstat1" class="col-md-6 col-xs-12 leaderstatboxes">
+            <div class="p-3 ">
+                <h5>Total Donations Made To Date:</h5>
+                <p>$@ViewBag.totalDonationsToDate</p>
+            </div>
+
+        </div>
+        <!--Second column containing largestDonationToDate-->
+        <div id="leaderstat2" class="col-md-6 col-xs-12 leaderstatboxes">
+            <div class="p-3 ">
+                <h5>Largest Donation Made To Date:</h5>
+                <p>$@ViewBag.largestDonationToDate</p>
+            </div>
+
+        </div>
+    </div>
+    <!--Chart 1 providing count of the three types of donations and displayed on PieChart-->
+    <div id="chart1">
+        <canvas id="pieChart" style="width:100%;max-width:600px;display:inline;"></canvas>
+        <script type="text/javascript">
+        var xValues = ["Item", "Cash", "Time"];
+        // Receiving three viewbag items containing counts of types of donations
+        var yValues = [@ViewBag.itemPieChart, @ViewBag.cashPieChart, @ViewBag.timePieChart];
+        var barColors = [ "gold", "darkgreen", "gray" ];
+
+            new Chart("pieChart", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Distribution of Donation Types"
+                }
+            }
+        });
+        </script>
+    </div>
+    <!--Chart 2 providing monthly total of donations-->
+    <div id="chart2">
+        <canvas id="barChart" style="width:100%;max-width:600px; display:inline;"></canvas>
+
+        <script>
+            var xValues = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            //Receiving serialized Json list from controllers viewbag and parsing for list
+            var yValues = JSON.parse('@Html.Raw(ViewBag.donationSummaryList)');
+            var barColors = ["blue", "purple", "lightblue", "red", "green", "violet", "brown", "orange", "darkblue", "pink", "yellow", "aquamarine"];
+
+            new Chart("barChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "Total Donations Per Month"
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
+
