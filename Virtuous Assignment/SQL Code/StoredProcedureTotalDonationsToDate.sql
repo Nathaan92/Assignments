@@ -1,4 +1,4 @@
-CREATE PROCEDURE [DBO].[DonationTotalPerMonth]
+CREATE PROCEDURE [DBO].[TotalDonationsToDate]
 AS
 BEGIN
 
