@@ -152,23 +152,28 @@ namespace Donation.Controllers
         public IActionResult DonationMetrics()
         {
             //Query cash donations for count for views piechart
+            //Undeclared type variable = Donation Summaries table where doantion type is == to cash, count each instance
             var cashPieChart = _context.DonationSummaries.Where(a => a.DonationType == "Cash").Count();
             ViewBag.cashPieChart = cashPieChart;
 
             //Query time donations for count for views piechart
+            //Undeclared type variable = Donation Summaries table where doantion type is == to time, count each instance
             var timePieChart = _context.DonationSummaries.Where(a => a.DonationType == "Time").Count();
             ViewBag.timePieChart = timePieChart;
 
             //Query item donations for count for views piechart
+            //Undeclared type variable = Donation Summaries table where doantion type is == to count, count each instance
             var itemPieChart = _context.DonationSummaries.Where(a => a.DonationType == "Item").Count();
             ViewBag.itemPieChart = itemPieChart;
 
             //Query group by month, add total of donationcash value, to list. Year was included to add yearly charts.
+            //undeclared type variable = Doantion Summaries table select donation date by year, month and donation cash value, group by year and month, sum donation cash value, add to list
             var monthlyDonations = _context.DonationSummaries.Select(d => new { d.DonationDate.Year, d.DonationDate.Month, d.DonationCashValue }).GroupBy(x => new { x.Year, x.Month }, (key, group) => new { donationtotal = group.Sum(dt => dt.DonationCashValue) }).ToList();
 
             //List to recieve decimal values from foreach loop
             List<Decimal> donationSummaryList = new List<Decimal>();
             //Foreach loop to convert from anonymous type list to decimal type values
+            //foreach variable in monthlyDonations List add doantion total to donationsummaries list
             foreach (var monthlyDonation in monthlyDonations)
             {
                 donationSummaryList.Add(monthlyDonation.donationtotal);
@@ -177,10 +182,12 @@ namespace Donation.Controllers
             ViewBag.donationSummaryList = Newtonsoft.Json.JsonConvert.SerializeObject(donationSummaryList);
 
             //Query sum of donationcashvalue to date
+            //undeclared type variable = Donation Summaries table sum of doantion cash value column
             var totalDonationsToDate = _context.DonationSummaries.Sum(a => a.DonationCashValue);
             ViewBag.totalDonationsToDate = totalDonationsToDate;
 
             //Query max of donationcashvalue to date
+            //undeclared varialbe = Donation Summaries largest value in doantion cash value table 
             var largestDonationToDate = _context.DonationSummaries.Max(a => a.DonationCashValue);
             ViewBag.largestDonationToDate = largestDonationToDate;
 
