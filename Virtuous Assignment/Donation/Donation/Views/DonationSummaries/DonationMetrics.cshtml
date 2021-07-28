@@ -1,4 +1,4 @@
-﻿
+﻿@model Donation.Models.DonationMetricsViewModel
 @{
     ViewData["Title"] = "DonationMetrics";
 }
@@ -16,7 +16,7 @@
         <div id="leaderstat1" class="col-md-6 col-xs-12 leaderstatboxes">
             <div class="p-3 ">
                 <h5>Total Donations Made To Date:</h5>
-                <p>$@ViewBag.totalDonationsToDate</p>
+                <p>@Model.TotalDonationsToDate</p>
             </div>
 
         </div>
@@ -24,7 +24,7 @@
         <div id="leaderstat2" class="col-md-6 col-xs-12 leaderstatboxes">
             <div class="p-3 ">
                 <h5>Largest Donation Made To Date:</h5>
-                <p>$@ViewBag.largestDonationToDate</p>
+                <p>@Model.LargestDonationToDate</p>
             </div>
 
         </div>
@@ -34,8 +34,8 @@
         <canvas id="pieChart" style="width:100%;max-width:600px;display:inline;"></canvas>
         <script type="text/javascript">
         var xValues = ["Item", "Cash", "Time"];
-        // Receiving three viewbag items containing counts of types of donations
-        var yValues = [@ViewBag.itemPieChart, @ViewBag.cashPieChart, @ViewBag.timePieChart];
+            // Receiving three viewbag items containing counts of types of donations
+            var yValues = [@Model.ItemTotal, @Model.CashTotal, @Model.TimeTotal];
         var barColors = [ "gold", "darkgreen", "gray" ];
 
             new Chart("pieChart", {
@@ -61,9 +61,10 @@
         <canvas id="barChart" style="width:100%;max-width:600px; display:inline;"></canvas>
 
         <script>
-            var xValues = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            //there is a better way to do this... but it requires more work like ajax/javascript calls to an api endpoint to fetch async
+            var xValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.TimeAxis));
             //Receiving serialized Json list from controllers viewbag and parsing for list
-            var yValues = JSON.parse('@Html.Raw(ViewBag.donationSummaryList)');
+            var yValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Datapoints));
             var barColors = ["blue", "purple", "lightblue", "red", "green", "violet", "brown", "orange", "darkblue", "pink", "yellow", "aquamarine"];
 
             new Chart("barChart", {
